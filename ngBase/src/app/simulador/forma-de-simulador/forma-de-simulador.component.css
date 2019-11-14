@@ -1,0 +1,8 @@
+.simulador-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.simulador-form > * {
+  width: 100%;
+}

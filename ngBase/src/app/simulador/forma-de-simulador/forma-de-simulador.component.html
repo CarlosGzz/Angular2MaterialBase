@@ -1,0 +1,64 @@
+<mat-card>
+  <form>
+    <div class="simulador-form">
+      <mat-form-field>
+        <input matInput type="number" placeholder="Numero de Jugadores" [(ngModel)]="numeroDeJugadores" name="numeroDeJugadores" required />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="number"
+          placeholder="Victorias Para Terminar"
+          [(ngModel)]="cantidadDeVictoriasParaTerminar"
+          name="cantidadDeVictoriasParaTerminar"
+          required
+        />
+      </mat-form-field>
+      <br />
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Opciones
+            </mat-panel-title>
+            <mat-panel-description>
+              Selecciona el tipo de juego y el metodo de simulación
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="simulador-form">
+            <mat-form-field>
+              <mat-label>Metodo de Simulacion</mat-label>
+              <mat-select [(ngModel)]="metodoDeSimulacion" name="metodoDeSimulacion">
+                <mat-option *ngFor="let metodoDeSimulacion of metodosDeSimulacion" [value]="metodoDeSimulacion.value">
+                  {{ metodoDeSimulacion.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Tipo de Juego</mat-label>
+              <mat-select [(ngModel)]="tipoDeJuego" name="tipoDeJuego">
+                <mat-option *ngFor="let tipoDeJuego of tiposDeJuego" [value]="tipoDeJuego.value">
+                  {{ tipoDeJuego.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <mat-form-field>
+              <input
+                matInput
+                type="number"
+                placeholder="Numero de Repeticiones Para Promediar"
+                [(ngModel)]="numerodDePromedio"
+                name="numerodDePromedio"
+                required
+              />
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <br />
+    <button mat-raised-button (click)="correrSimulacion()" color="primary">Correr Simulacion Individual</button>
+    <button mat-raised-button (click)="promediarSimulaciones()" color="warn">Promediar Simulaciones</button>
+  </form>
+</mat-card>
