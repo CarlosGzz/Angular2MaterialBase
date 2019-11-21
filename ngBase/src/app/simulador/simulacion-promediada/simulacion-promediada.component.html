@@ -1,0 +1,50 @@
+<mat-card>
+  <h3>
+    PROMEDIO DE SIMULACIONES:
+  </h3>
+  <p>
+    Jugador Ganador de toda las partidas:
+    <b *ngIf="promedioDeSimulaciones.jugadorGanadorDeTodasLasSimulaciones !== null">
+      JUGADOR {{ promedioDeSimulaciones.jugadorGanadorDeTodasLasSimulaciones + 1 }}
+    </b>
+    <b *ngIf="promedioDeSimulaciones.jugadorGanadorDeTodasLasSimulaciones === null">EMPATE</b>
+  </p>
+  <p *ngIf="promedioDeSimulaciones.jugadorGanadorDeTodasLasSimulaciones !== null">
+    Promedio Compuesto de jugador Ganador:
+    <b>
+      {{
+        promedioDeSimulaciones.promedioCompuestoDeJugadores[promedioDeSimulaciones.jugadorGanadorDeTodasLasSimulaciones] | number: '1.2-4'
+      }}
+    </b>
+  </p>
+
+  <p>Resto de los jugadores</p>
+  <div *ngFor="let promedio of promedioDeSimulaciones.promedioCompuestoDeJugadores; index as jugador">
+    <p>
+      Jugador {{ jugador + 1 }}: {{ promedioDeSimulaciones.sumaDeJuegosGanadosPorJugador[jugador] }}
+      <br />
+      <small>promedio: {{ promedio | number: '1.2-4' }} </small>
+    </p>
+  </div>
+</mat-card>
+<mat-card *ngIf="promedioDeSimulaciones.simulaciones && promedioDeSimulaciones.simulaciones.length < 20">
+  <div class="container" *ngFor="let simulacion of promedioDeSimulaciones.simulaciones; index as i">
+    <h3>RESULTADO DE SIMULACION {{ i + 1 }}:</h3>
+    <p>Nombre de Jugador | Numero de Victorias</p>
+    <div *ngFor="let victorias of simulacion.victoriasPorJugador; index as j">
+      <p>
+        <b>Jugador {{ j + 1 }}:</b> {{ victorias }}
+        <mat-icon *ngIf="j === simulacion.jugadorGanadorDeSimulacion" aria-hidden="false" style="color:lightgreen">
+          check_circle_outline
+        </mat-icon>
+      </p>
+      <small *ngIf="victorias">probabilidad del jugador : {{ simulacion.promedioDeVictoriasPorJugador[j] }}</small>
+    </div>
+    <div *ngIf="simulacion.simulacionesVisuales.length > 0">
+      <p>Numero de Partidas: {{ simulacion.simulacionesVisuales.length  }}</p>
+      <p>Numero Total de Juegos: {{ simulacion.numeroDeJuegos }}</p>
+      <p>Promedio de Juegos Por Simulacion: {{ simulacion.promedioDeJuegosPorPartida | number: '1.2-4' }}</p>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+</mat-card>

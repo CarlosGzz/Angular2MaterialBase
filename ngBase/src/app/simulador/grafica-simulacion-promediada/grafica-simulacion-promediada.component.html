@@ -1,0 +1,34 @@
+<div style="display: block">
+  <h3>Probabilida Por Jugador</h3>
+  <canvas
+    baseChart
+    *ngIf="graficaPromediosData.barChartData.length > 0"
+    [datasets]="graficaPromediosData.barChartData"
+    [labels]="graficaPromediosData.barChartLabels"
+    [options]="graficaPromediosData.barChartOptions"
+    [plugins]="graficaPromediosData.barChartPlugins"
+    [legend]="graficaPromediosData.barChartLegend"
+    [chartType]="graficaPromediosData.barChartType"
+  >
+  </canvas>
+</div>
+<div style="display: block">
+  <h3>Probabilidad Por Jugador</h3>
+  <!-- <canvas
+    baseChart
+    *ngIf="graficaPromediosCompuestosLineal.barChartData.length > 0"
+    [datasets]="graficaPromediosCompuestosLineal.barChartData"
+    [labels]="graficaPromediosCompuestosLineal.barChartLabels"
+    [options]="graficaPromediosCompuestosLineal.barChartOptions"
+    [plugins]="graficaPromediosCompuestosLineal.barChartPlugins"
+    [legend]="graficaPromediosCompuestosLineal.barChartLegend"
+    [chartType]="graficaPromediosCompuestosLineal.barChartType"
+  >
+  </canvas> -->
+  <highcharts-chart
+  [Highcharts]="Highcharts"
+  [options]="chartOptions"
+
+  style="width: 100%; height: 400px; display: block;"
+></highcharts-chart>
+</div>

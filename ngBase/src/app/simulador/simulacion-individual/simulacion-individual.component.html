@@ -1,0 +1,35 @@
+<mat-card>
+  <h3>
+    RESULTADO DE SIMULACION:
+  </h3>
+  <p>Nombre de Jugador | Numero de Victorias</p>
+  <div *ngIf="simulacionIndividual.victoriasPorJugador">
+    <div *ngFor="let victorias of simulacionIndividual.victoriasPorJugador; index as i">
+      <p>
+        <b>Jugador {{ i + 1 }}:</b> {{ victorias }}
+        <mat-icon *ngIf="i === simulacionIndividual.jugadorGanadorDeSimulacion" aria-hidden="false" style="color:lightgreen">
+          check_circle_outline
+        </mat-icon>
+      </p>
+      <small *ngIf="victorias">probabilidad del jugador : {{ simulacionIndividual.promedioDeVictoriasPorJugador[i]  | number: '1.2-4' }}</small>
+    </div>
+  </div>
+  <br />
+  <mat-divider></mat-divider>
+  <h3>SIMULACION DE PARTIDAS</h3>
+  <div *ngIf="simulacionIndividual.simulacionesVisuales.length > 0">
+    <p>Numero de Partidas: {{ simulacionIndividual.simulacionesVisuales.length  }}</p>
+    <p>Numero Total de Juegos: {{ simulacionIndividual.numeroDeJuegos }}</p>
+    <p>Promedio de Juegos Por Simulacion: {{ simulacionIndividual.promedioDeJuegosPorPartida | number: '1.2-4' }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="simulacionIndividual.simulacionesVisuales.length < 20">
+    <div *ngFor="let simulacionVisual of simulacionIndividual.simulacionesVisuales; index as numeroDeJuego">
+      <p>
+        Simulacion {{ numeroDeJuego + 1 }} | <small> total de juegos: {{ simulacionVisual.juegos }} </small> |
+        <small> ganador: Jugador {{ simulacionVisual.jugadorGanador }}</small>
+      </p>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</mat-card>

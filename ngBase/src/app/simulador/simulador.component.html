@@ -1,0 +1,34 @@
+<app-forma-de-simulador (correrSimulaciom)="correrSimulacion($event)" (promediarSimulacion)="promediarSimulaciones($event)">
+</app-forma-de-simulador>
+<br />
+<mat-divider></mat-divider>
+<br />
+<mat-tab-group>
+  <mat-tab label="Resultados">
+    <app-simulacion-individual
+      *ngIf="simulacionPromedioOIndividual === 'individual' && simulacionIndividual"
+      [simulacionIndividual]="simulacionIndividual"
+    >
+    </app-simulacion-individual>
+    <app-simulacion-promediada
+      *ngIf="simulacionPromedioOIndividual === 'promedio' && promedioDeSimulaciones"
+      [promedioDeSimulaciones]="promedioDeSimulaciones"
+    >
+    </app-simulacion-promediada>
+  </mat-tab>
+  <mat-tab label="Graficas">
+    <app-grafica-simulacion-individual
+      *ngIf="simulacionPromedioOIndividual === 'individual' && simulacionIndividual"
+      [simulacionIndividual]="simulacionIndividual"
+      [numeroDeJugadores]="numeroDeJugadores"
+      [numeroDeSimulaciones]="numeroDeSimulaciones"
+    >
+    </app-grafica-simulacion-individual>
+    <app-grafica-simulacion-promediada
+      *ngIf="simulacionPromedioOIndividual === 'promedio' && promedioDeSimulaciones"
+      [promedioDeSimulaciones]="promedioDeSimulaciones"
+      [numeroDeJugadores]="numeroDeJugadores"
+    >
+    </app-grafica-simulacion-promediada>
+  </mat-tab>
+</mat-tab-group>
