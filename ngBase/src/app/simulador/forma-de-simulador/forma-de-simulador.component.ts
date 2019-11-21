@@ -9,9 +9,9 @@ export class FormaDeSimuladorComponent implements OnInit {
   @Output() correrSimulaciom = new EventEmitter<any>();
   @Output() promediarSimulacion = new EventEmitter<any>();
   numeroDeJugadores = 2;
-  cantidadDeVictoriasParaTerminar = 10;
+  numeroDeSimulaciones = 10;
   metodoDeSimulacion = 0;
-  tipoDeJuego = 1;
+  tipoDeJuego = 0;
   numerodDePromedio = 10;
 
   metodosDeSimulacion = [
@@ -38,7 +38,7 @@ export class FormaDeSimuladorComponent implements OnInit {
   get datosDeForma() {
     return {
       numeroDeJugadores: this.numeroDeJugadores,
-      cantidadDeVictoriasParaTerminar: this.cantidadDeVictoriasParaTerminar,
+      numeroDeSimulaciones: this.numeroDeSimulaciones,
       metodoDeSimulacion: this.metodoDeSimulacion,
       tipoDeJuego: this.tipoDeJuego,
       numerodDePromedio: this.numerodDePromedio,

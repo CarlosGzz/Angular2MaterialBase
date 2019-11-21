@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { SimulacionIndividual, PromedioDeSimulaciones, FormaDeSimulador } from './modelos-de-simulador';
+import { Component, OnInit } from "@angular/core";
+import {
+  SimulacionIndividual,
+  PromedioDeSimulaciones,
+  FormaDeSimulador
+} from "./modelos-de-simulador";
 
 @Component({
-  selector: 'app-simulador',
-  templateUrl: './simulador.component.html',
-  styleUrls: ['./simulador.component.css'],
+  selector: "app-simulador",
+  templateUrl: "./simulador.component.html",
+  styleUrls: ["./simulador.component.css"]
 })
 export class SimuladorComponent implements OnInit {
   numeroDeJugadores = 2;
-  cantidadDeVictoriasParaTerminar = 10;
+  numeroDeSimulaciones = 10;
   metodoDeSimulacion = 0;
   tipoDeJuego = 1;
   numerodDePromedio = 10;
@@ -16,17 +20,18 @@ export class SimuladorComponent implements OnInit {
   simulacionIndividual: SimulacionIndividual;
   promedioDeSimulaciones: PromedioDeSimulaciones;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   correrSimulacion(datosDeForma: FormaDeSimulador) {
     this.establecerDatosDelFormularioDeSimulador(datosDeForma);
     this.simulacionIndividual = this.inicializarSimulacionIndividual();
-    this.simulacionIndividual = this.escogerSimulacion(datosDeForma.metodoDeSimulacion);
-    this.simulacionPromedioOIndividual = 'individual';
+    this.simulacionIndividual = this.escogerSimulacion(
+      datosDeForma.metodoDeSimulacion
+    );
+    this.simulacionPromedioOIndividual = "individual";
   }
 
-  escogerSimulacion(metodoDeSimulacion){
+  escogerSimulacion(metodoDeSimulacion) {
     const simulacion = {
       0: () => this.primerJugadorSiempreInicia(),
       1: () => this.jugadorQueGanaSigueJugando(),
@@ -39,40 +44,55 @@ export class SimuladorComponent implements OnInit {
     this.establecerDatosDelFormularioDeSimulador(datosDeForma);
     this.promedioDeSimulaciones = this.inicializarPromedioDeSimulaciones();
     for (let i = 0; i < this.numerodDePromedio; i++) {
-      this.promedioDeSimulaciones.simulaciones.push(this.escogerSimulacion(datosDeForma.metodoDeSimulacion));
+      this.promedioDeSimulaciones.simulaciones.push(
+        this.escogerSimulacion(datosDeForma.metodoDeSimulacion)
+      );
     }
     this.promedioDeSimulaciones.promedioCompuestoDeJugadores = this.obtenerPromedioDeJugadorGanador(
       this.promedioDeSimulaciones.simulaciones
     );
     this.promedioDeSimulaciones = {
       ...this.promedioDeSimulaciones,
-      ...this.obtenerJugadorGanadorDeTodasLasSimulaciones(this.promedioDeSimulaciones.simulaciones),
+      ...this.obtenerJugadorGanadorDeTodasLasSimulaciones(
+        this.promedioDeSimulaciones.simulaciones
+      )
     };
-    this.simulacionPromedioOIndividual = 'promedio';
+    this.simulacionPromedioOIndividual = "promedio";
   }
 
   private establecerDatosDelFormularioDeSimulador(datosDeForma) {
     this.numeroDeJugadores = datosDeForma.numeroDeJugadores;
-  this.cantidadDeVictoriasParaTerminar = datosDeForma.cantidadDeVictoriasParaTerminar;
-  this.metodoDeSimulacion = datosDeForma.metodoDeSimulacion;
-  this.tipoDeJuego = datosDeForma.tipoDeJuego;
-  this.numerodDePromedio = datosDeForma.numerodDePromedio;
+    this.numeroDeSimulaciones = datosDeForma.numeroDeSimulaciones;
+    this.metodoDeSimulacion = datosDeForma.metodoDeSimulacion;
+    this.tipoDeJuego = datosDeForma.tipoDeJuego;
+    this.numerodDePromedio = datosDeForma.numerodDePromedio;
   }
 
-  private obtenerPromedioDeJugadorGanador(simulaciones: Array<SimulacionIndividual>) {
+  private obtenerPromedioDeJugadorGanador(
+    simulaciones: Array<SimulacionIndividual>
+  ) {
     let sumaDePromediosPorJugador = new Array<number>(this.numeroDeJugadores);
     simulaciones.forEach(simulacion => {
-      simulacion.promedioDeVictoriasPorJugador.forEach((promedioDeVictoriasDeJugador, index) => {
-        sumaDePromediosPorJugador[index] =
-          parseFloat(promedioDeVictoriasDeJugador) + (sumaDePromediosPorJugador[index] ? sumaDePromediosPorJugador[index] : 0);
-      });
+      simulacion.promedioDeVictoriasPorJugador.forEach(
+        (promedioDeVictoriasDeJugador, index) => {
+          sumaDePromediosPorJugador[index] =
+            parseFloat(promedioDeVictoriasDeJugador) +
+            (sumaDePromediosPorJugador[index]
+              ? sumaDePromediosPorJugador[index]
+              : 0);
+        }
+      );
     });
-    const promedioCompuestoDeJugadores = sumaDePromediosPorJugador.map(sumaDeJugador => {
-      return sumaDeJugador / this.numerodDePromedio;
-    });
+    const promedioCompuestoDeJugadores = sumaDePromediosPorJugador.map(
+      sumaDeJugador => {
+        return sumaDeJugador / this.numerodDePromedio;
+      }
+    );
     return promedioCompuestoDeJugadores;
   }
-  private obtenerJugadorGanadorDeTodasLasSimulaciones(simulaciones: Array<SimulacionIndividual>): Partial<PromedioDeSimulaciones> {
+  private obtenerJugadorGanadorDeTodasLasSimulaciones(
+    simulaciones: Array<SimulacionIndividual>
+  ): Partial<PromedioDeSimulaciones> {
     let hash = {};
     let contadorDeMasFrecuente = 0;
     let masFrecuente: number;
@@ -91,17 +111,20 @@ export class SimuladorComponent implements OnInit {
     if (hash[masFrecuente] <= this.numerodDePromedio / this.numeroDeJugadores) {
       masFrecuente = null;
     }
-    return { jugadorGanadorDeTodasLasSimulaciones: masFrecuente, sumaDeJuegosGanadosPorJugador: hash };
+    return {
+      jugadorGanadorDeTodasLasSimulaciones: masFrecuente,
+      sumaDeJuegosGanadosPorJugador: hash
+    };
   }
 
   private inicializarSimulacionIndividual(): SimulacionIndividual {
     return {
-      numeroDePartidas: 0,
+      numeroDeJuegos: 0,
       victoriasPorJugador: this.inicializarJugadores(),
       simulacionesVisuales: [],
       promedioDeJuegosPorPartida: 0,
       promedioDeVictoriasPorJugador: [],
-      jugadorGanadorDeSimulacion: undefined,
+      jugadorGanadorDeSimulacion: undefined
     };
   }
 
@@ -118,122 +141,142 @@ export class SimuladorComponent implements OnInit {
       promedioCompuestoDeJugadores: [],
       simulaciones: [],
       jugadorGanadorDeTodasLasSimulaciones: undefined,
-      sumaDeJuegosGanadosPorJugador: [],
+      sumaDeJuegosGanadosPorJugador: []
     };
   }
 
-  private obtenerPromediosDeSimulacion(simulacion: SimulacionIndividual): Partial<SimulacionIndividual> {
+  private obtenerPromediosDeSimulacion(
+    simulacion: SimulacionIndividual,
+    sumaTotalDeJuegos: number
+  ): Partial<SimulacionIndividual> {
     const promediosDeSimulacion = {
-      promedioDeVictoriasPorJugador: this.promedioDeVictoriasPorJugador(simulacion),
-      promedioDeJuegosPorPartida: simulacion.numeroDePartidas / simulacion.simulacionesVisuales.length,
+      promedioDeVictoriasPorJugador: this.promedioDeVictoriasPorJugador(
+        simulacion
+      ),
+      promedioDeJuegosPorPartida:
+        sumaTotalDeJuegos / simulacion.simulacionesVisuales.length
     };
     return promediosDeSimulacion;
   }
 
-  private promedioDeVictoriasPorJugador(simulacion: SimulacionIndividual): Array<string> {
+  private promedioDeVictoriasPorJugador(
+    simulacion: SimulacionIndividual
+  ): Array<string> {
     const dat = simulacion.victoriasPorJugador.map(victorias => {
-      return (victorias / simulacion.numeroDePartidas).toFixed(4);
+      return (victorias / simulacion.simulacionesVisuales.length).toFixed(4);
     });
     return dat;
   }
 
   private primerJugadorSiempreInicia(): SimulacionIndividual {
     let posicion = 0;
-    let juego = 0;
+    let partidas = 0;
     let sumaJuegosPorPartida = 0;
+    let sumaTotalDeJuegos = 0;
     let simulacion = this.inicializarSimulacionIndividual();
     do {
-      simulacion.numeroDePartidas++;
+      sumaTotalDeJuegos++;
       sumaJuegosPorPartida++;
       const random = Math.random().toFixed(4);
       if (this.validarPartida(random)) {
-        simulacion.simulacionesVisuales[juego] = {
+        simulacion.simulacionesVisuales[partidas] = {
           jugadorGanador: posicion + 1,
-          juegos: sumaJuegosPorPartida,
+          juegos: sumaJuegosPorPartida
         };
         simulacion.victoriasPorJugador[posicion]++;
         posicion = 0;
-        juego++;
+        partidas++;
         sumaJuegosPorPartida = 0;
       } else {
         posicion = this.aumentarPosicion(posicion);
       }
-    } while (!this.jugadorHaGanado(simulacion.victoriasPorJugador));
-    const jugadorGanadorDeSimulacion = this.jugadorGanadorDeSimulacion(simulacion.victoriasPorJugador);
+    } while (partidas < this.numeroDeSimulaciones);
+    const jugadorGanadorDeSimulacion = this.jugadorGanadorDeSimulacion(
+      simulacion.victoriasPorJugador
+    );
     simulacion = {
       ...simulacion,
-      ...this.obtenerPromediosDeSimulacion(simulacion),
+      ...this.obtenerPromediosDeSimulacion(simulacion, sumaTotalDeJuegos),
       jugadorGanadorDeSimulacion,
+      numeroDeJuegos: sumaTotalDeJuegos
     };
     return simulacion;
   }
 
   private jugadorQueGanaSigueJugando() {
     let posicion = 0;
-    let juego = 0;
+    let partidas = 0;
     let sumaJuegosPorPartida = 0;
+    let sumaTotalDeJuegos = 0;
     let simulacion = this.inicializarSimulacionIndividual();
     do {
-      simulacion.numeroDePartidas++;
+      sumaTotalDeJuegos++;
       sumaJuegosPorPartida++;
       const random = Math.random().toFixed(4);
       if (this.validarPartida(random)) {
-        simulacion.simulacionesVisuales[juego] = {
+        simulacion.simulacionesVisuales[partidas] = {
           jugadorGanador: posicion + 1,
-          juegos: sumaJuegosPorPartida,
+          juegos: sumaJuegosPorPartida
         };
         simulacion.victoriasPorJugador[posicion]++;
-        juego++;
+        partidas++;
         sumaJuegosPorPartida = 0;
       } else {
         posicion = this.aumentarPosicion(posicion);
       }
-    } while (!this.jugadorHaGanado(simulacion.victoriasPorJugador));
-    const jugadorGanadorDeSimulacion = this.jugadorGanadorDeSimulacion(simulacion.victoriasPorJugador);
+    } while (partidas < this.numeroDeSimulaciones);
+    const jugadorGanadorDeSimulacion = this.jugadorGanadorDeSimulacion(
+      simulacion.victoriasPorJugador
+    );
     simulacion = {
       ...simulacion,
-      ...this.obtenerPromediosDeSimulacion(simulacion),
+      ...this.obtenerPromediosDeSimulacion(simulacion, sumaTotalDeJuegos),
       jugadorGanadorDeSimulacion,
+      numeroDeJuegos: sumaTotalDeJuegos
     };
     return simulacion;
   }
 
   private jugadoresIntercalados() {
     let posicion = 0;
-    let juego = 0;
+    let partidas = 0;
     let sumaJuegosPorPartida = 0;
+    let sumaTotalDeJuegos = 0;
     let simulacion = this.inicializarSimulacionIndividual();
     do {
-      simulacion.numeroDePartidas++;
+      sumaTotalDeJuegos++;
       sumaJuegosPorPartida++;
       const random = Math.random().toFixed(4);
       if (this.validarPartida(random)) {
-        simulacion.simulacionesVisuales[juego] = {
+        simulacion.simulacionesVisuales[partidas] = {
           jugadorGanador: posicion + 1,
-          juegos: sumaJuegosPorPartida,
+          juegos: sumaJuegosPorPartida
         };
         simulacion.victoriasPorJugador[posicion]++;
         posicion = this.aumentarPosicion(posicion);
-        juego++;
+        partidas++;
         sumaJuegosPorPartida = 0;
       } else {
         posicion = this.aumentarPosicion(posicion);
       }
-    } while (!this.jugadorHaGanado(simulacion.victoriasPorJugador));
-    const jugadorGanadorDeSimulacion = this.jugadorGanadorDeSimulacion(simulacion.victoriasPorJugador);
+    } while (partidas < this.numeroDeSimulaciones);
+    const jugadorGanadorDeSimulacion = this.jugadorGanadorDeSimulacion(
+      simulacion.victoriasPorJugador
+    );
     simulacion = {
       ...simulacion,
-      ...this.obtenerPromediosDeSimulacion(simulacion),
+      ...this.obtenerPromediosDeSimulacion(simulacion, sumaTotalDeJuegos),
       jugadorGanadorDeSimulacion,
+      numeroDeJuegos: sumaTotalDeJuegos
     };
     return simulacion;
   }
 
   private validarPartida(random) {
     const validar = {
-      0: (valorRandom) => this.validarCaraOCruz(valorRandom),
-      1: (valorRandom) => this.validarCaraOCruz(valorRandom),
-      2: (valorRandom) => this.validarCaraOCruz(valorRandom),
+      0: valorRandom => this.validarCaraOCruz(valorRandom),
+      1: valorRandom => this.validarDado(valorRandom),
+      2: valorRandom => this.validarCartas(valorRandom)
     };
     return validar[this.tipoDeJuego](random);
   }
@@ -265,19 +308,27 @@ export class SimuladorComponent implements OnInit {
     return posicion;
   }
 
-  private jugadorHaGanado(victoriasPorJugador) {
-    return victoriasPorJugador.some(victorias => {
-      return victorias >= this.cantidadDeVictoriasParaTerminar;
-    });
-  }
-
   private jugadorGanadorDeSimulacion(victoriasPorJugador): number {
     let jugadorGanador = null;
+    let auxiliar;
+    let auxiliarEmpate;
     victoriasPorJugador.forEach((victorias, index) => {
-      if (victorias >= this.cantidadDeVictoriasParaTerminar) {
-        jugadorGanador = +index;
+      if (auxiliar === undefined) {
+        auxiliar = victorias;
+        jugadorGanador = index;
+      } else {
+        if (auxiliar === victorias) {
+          auxiliarEmpate = victorias;
+        }
+        if (auxiliar < victorias) {
+          auxiliar = victorias;
+          jugadorGanador = index;
+        }
       }
     });
+    if (victoriasPorJugador[jugadorGanador] === auxiliarEmpate) {
+      jugadorGanador = null;
+    }
     return jugadorGanador;
   }
 }

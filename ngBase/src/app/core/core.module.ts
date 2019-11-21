@@ -6,6 +6,7 @@ import { MaterialModule } from './material/material.module';
 import { HeaderNavigationComponent } from './header-navigation/header-navigation.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [SidenavListComponent, PageNotFoundComponent, HeaderNavigationComponent],
@@ -13,7 +14,8 @@ import { SidenavListComponent } from './sidenav-list/sidenav-list.component';
     CommonModule,
     MaterialModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    ChartsModule
   ],
   exports: [SidenavListComponent, PageNotFoundComponent, HeaderNavigationComponent]
 })

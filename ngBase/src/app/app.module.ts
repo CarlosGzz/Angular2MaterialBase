@@ -6,6 +6,8 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { MaterialModule } from './core/material/material.module';
+import { ChartsModule } from 'ng2-charts';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AppComponent } from './app.component';
 import { SimuladorComponent } from './simulador/simulador.component';
@@ -30,7 +32,16 @@ import { GraficaSimulacionPromediadaComponent } from './simulador/grafica-simula
     GraficaSimulacionIndividualComponent,
     GraficaSimulacionPromediadaComponent,
   ],
-  imports: [CoreModule, MaterialModule, BrowserModule, AppRoutingModule, BrowserAnimationsModule, FormsModule],
+  imports: [
+    CoreModule,
+    MaterialModule,
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ChartsModule,
+    HighchartsChartModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

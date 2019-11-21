@@ -1,3 +1,45 @@
-<p>
-  grafica-simulacion-individual works!
-</p>
+<div style="display: block">
+  <h3>Victorias Por Jugador</h3>
+  <canvas
+    baseChart
+    *ngIf="graficaVictoriasData.barChartData.length > 0"
+    [datasets]="graficaVictoriasData.barChartData"
+    [labels]="graficaVictoriasData.barChartLabels"
+    [options]="graficaVictoriasData.barChartOptions"
+    [plugins]="graficaVictoriasData.barChartPlugins"
+    [legend]="graficaVictoriasData.barChartLegend"
+    [chartType]="graficaVictoriasData.barChartType"
+  >
+  </canvas>
+</div>
+<mat-divider></mat-divider>
+<h3>Probabilidad por Jugador de Ganar</h3>
+<div style="display: block">
+  <canvas
+    baseChart
+    *ngIf="graficaPromediosData.barChartData.length > 0"
+    [datasets]="graficaPromediosData.barChartData"
+    [labels]="graficaPromediosData.barChartLabels"
+    [options]="graficaPromediosData.barChartOptions"
+    [plugins]="graficaPromediosData.barChartPlugins"
+    [legend]="graficaPromediosData.barChartLegend"
+    [chartType]="graficaPromediosData.barChartType"
+  >
+  </canvas>
+</div>
+<mat-divider></mat-divider>
+<h3>Distribucion de Juegos por Partida</h3>
+<div style="display: block">
+  <canvas
+    baseChart
+    *ngIf="graficaSimulacionesData.barChartData.length > 0"
+    [datasets]="graficaSimulacionesData.barChartData"
+    [labels]="graficaSimulacionesData.barChartLabels"
+    [options]="graficaSimulacionesData.barChartOptions"
+    [plugins]="graficaSimulacionesData.barChartPlugins"
+    [legend]="graficaSimulacionesData.barChartLegend"
+    [chartType]="graficaSimulacionesData.barChartType"
+  >
+  </canvas>
+  <!-- <button mat-button mat-raised-button color="primary" (click)="normalizar()">Normalizar</button> -->
+</div>

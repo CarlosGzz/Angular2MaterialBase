@@ -16,5 +16,19 @@
     >
     </app-simulacion-promediada>
   </mat-tab>
-  <mat-tab label="Graficas"> Graficas </mat-tab>
+  <mat-tab label="Graficas">
+    <app-grafica-simulacion-individual
+      *ngIf="simulacionPromedioOIndividual === 'individual' && simulacionIndividual"
+      [simulacionIndividual]="simulacionIndividual"
+      [numeroDeJugadores]="numeroDeJugadores"
+      [numeroDeSimulaciones]="numeroDeSimulaciones"
+    >
+    </app-grafica-simulacion-individual>
+    <app-grafica-simulacion-promediada
+      *ngIf="simulacionPromedioOIndividual === 'promedio' && promedioDeSimulaciones"
+      [promedioDeSimulaciones]="promedioDeSimulaciones"
+      [numeroDeJugadores]="numeroDeJugadores"
+    >
+    </app-grafica-simulacion-promediada>
+  </mat-tab>
 </mat-tab-group>

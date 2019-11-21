@@ -12,7 +12,7 @@ export interface Partida {
 }
 
 export interface SimulacionIndividual {
-  numeroDePartidas: number;
+  numeroDeJuegos: number;
   victoriasPorJugador: Array<number>;
   simulacionesVisuales: Array<Partida>;
   promedioDeJuegosPorPartida: number;
