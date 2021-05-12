@@ -26,7 +26,7 @@
     "@angular/router": "^7.2.15",
     "ajv": "^6.10.0",
     "bootstrap": "^4.3.1",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.4",
     "core-js": "^2.6.9",
     "express": "^4.17.1",
     "hammerjs": "^2.0.8",
