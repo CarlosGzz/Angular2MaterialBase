@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^7.2.15",
     "@angular/platform-browser-dynamic": "^7.2.15",
     "@angular/router": "^7.2.15",
-    "ajv": "^6.10.0",
+    "ajv": "^6.12.3",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.9.2",
     "core-js": "^2.6.9",
